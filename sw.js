@@ -1,10 +1,10 @@
 // Keeps the whole app available offline. The build stamps a version into CACHE, so each release gets a fresh cache.
-const CACHE = 'gongse-c9f731283af2';
+const CACHE = 'gongse-e20c95208c7f';
 const FONTS = 'gongse-fonts';
 const FILES = ['./', 'index.html', 'dict.json', 'manifest.webmanifest', 'vendor/to-jyutping.js', 'vendor/pinyin-pro.js', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
