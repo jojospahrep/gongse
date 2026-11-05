@@ -506,7 +506,7 @@ function vToday() {
   const r = unread[0];
   const other = l === 'yue' ? 'cmn' : 'yue', oDue = dueKeys(other).length;
   const setup = [];
-  if (STANDALONE && /iP(hone|ad|od)/.test(navigator.userAgent) && !navigator.standalone) setup.push(`<div class="notice stack"><h3>Install 講寫 on your iPhone</h3><p class="small">In Safari, tap Share (it may be under •••), then View More, then Add to Home Screen. Open it from the new icon so it works offline and keeps your progress. Progress made here in Safari stays in Safari.</p></div>`);
+  if (STANDALONE && /iP(hone|ad|od)/.test(navigator.userAgent) && !navigator.standalone) setup.push(`<div class="notice stack"><h3>Install 講寫 on your iPhone</h3><p class="small">In Safari, tap Share (it may be under •••), then View More, then Add to Home Screen. Open it from the new icon while online and leave it open for a minute, so it can save itself for offline use. Your progress lives there. Progress made here in Safari stays in Safari.</p></div>`);
   if (!S.placed[l]) setup.push(`<div class="panel row between"><div><h3>Find your starting point</h3><p class="muted small">About 5 minutes. Characters only, no sound, so it measures reading and not speaking.</p></div><button class="btn pri" data-act="placeStart">Take the placement test</button></div>`);
   return `<section class="hero">
     <div class="tile ${tileClass(zhOf(next, l))}" lang="zh">${esc(zhOf(next, l))}</div>

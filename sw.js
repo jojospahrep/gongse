@@ -1,5 +1,5 @@
 // Keeps the whole app available offline. The build stamps a version into CACHE, so each release gets a fresh cache.
-const CACHE = 'gongse-b4df93d84d13';
+const CACHE = 'gongse-aa840b9233a2';
 const FONTS = 'gongse-fonts';
 const FILES = ['./', 'index.html', 'dict.json', 'manifest.webmanifest', 'vendor/to-jyutping.js', 'vendor/pinyin-pro.js', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
