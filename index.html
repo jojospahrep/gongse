@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="講寫"><meta name="theme-color" content="#FFD21F"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-180.png"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style><script>window.STANDALONE=true</script></head><body><title>講寫 Gong Se</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="講寫"><meta name="theme-color" content="#FFD21F"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-180.png"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}html{background:#FFD21F}html body{min-height:100dvh}</style><script>window.STANDALONE=true</script></head><body><title>講寫 Gong Se</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo+Narrow:wght@600;700&family=Archivo:wght@400;600;700&family=IBM+Plex+Mono:wght@400&family=Noto+Sans+HK:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+HK:wght@900&family=Noto+Serif+SC:wght@900&family=Noto+Serif+TC:wght@900&display=swap">
@@ -29,6 +29,7 @@ body{color:var(--ink);font:16px/1.5 var(--body);min-height:100%;
   background-color:var(--wall);background-image:linear-gradient(var(--grout) 1px,transparent 1px),linear-gradient(90deg,var(--grout) 1px,transparent 1px);background-size:var(--tile) var(--tile)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sign)}
 html{-webkit-text-size-adjust:100%}
+[data-focus]{scroll-margin-bottom:120px}
 button,a,label,input,textarea,select{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 input[type=search]{-webkit-appearance:none;appearance:none}
 a.btn{display:inline-block;text-decoration:none}
@@ -486,7 +487,9 @@ function render() {
   document.body.dataset.lang = L(); document.body.dataset.script = S.script;
   document.querySelectorAll('.langs button').forEach(b => { const on = b.dataset.l === L(); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
   const scr = document.getElementById('scr'); scr.hidden = L() !== 'cmn'; scr.textContent = S.script === 's' ? '简 → 繁' : '繁 → 简';
-  document.querySelector('meta[name=theme-color]')?.setAttribute('content', L() === 'yue' ? '#FFD21F' : '#1238A8');
+  const signColor = getComputedStyle(document.body).getPropertyValue('--sign').trim();
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content', signColor);
+  if (STANDALONE) document.documentElement.style.backgroundColor = signColor; // iOS paints the status bar with this.
   document.getElementById('brandz').textContent = L() === 'cmn' && S.script === 's' ? '讲写' : '講寫';
   document.getElementById('brande').textContent = L() === 'yue' ? 'Gong Se' : 'Jiǎng Xiě';
   document.getElementById('nav').innerHTML = NAV.map(n => `<button data-act="tab" data-k="${n[0]}" class="${ui.tab === n[0] && !ui.sess && !ui.pl ? 'on' : ''}"><span class="nz" lang="zh">${navZh(n)}</span><span class="ne">${n[1]}</span></button>`).join('');
@@ -494,7 +497,7 @@ function render() {
   else if (ui.sess) view.innerHTML = vSession();
   else view.innerHTML = ({ today: vToday, practice: vPractice, read: vRead, write: vWrite, words: vWords, progress: vProgress })[ui.tab]();
   renderSheet();
-  const f = view.querySelector('[data-focus]'); if (f) f.focus();
+  const f = view.querySelector('[data-focus]'); if (f) { f.focus(); f.scrollIntoView({ block: 'nearest' }); }
 }
 
 /* ---------- Today ---------- */
@@ -505,7 +508,7 @@ function vToday() {
   const r = unread[0];
   const other = l === 'yue' ? 'cmn' : 'yue', oDue = dueKeys(other).length;
   const setup = [];
-  if (STANDALONE && /iP(hone|ad|od)/.test(navigator.userAgent) && !navigator.standalone) setup.push(`<div class="notice stack"><h3>Install 講寫 on your iPhone</h3><p class="small">In Safari, tap Share, then Add to Home Screen. Open it from the new icon so it works offline and keeps your progress. Progress made here in Safari stays in Safari.</p></div>`);
+  if (STANDALONE && /iP(hone|ad|od)/.test(navigator.userAgent) && !navigator.standalone) setup.push(`<div class="notice stack"><h3>Install 講寫 on your iPhone</h3><p class="small">In Safari, tap Share (it may be under •••), then View More, then Add to Home Screen. Open it from the new icon so it works offline and keeps your progress. Progress made here in Safari stays in Safari.</p></div>`);
   if (!S.placed[l]) setup.push(`<div class="panel row between"><div><h3>Find your starting point</h3><p class="muted small">About 5 minutes. Characters only, no sound, so it measures reading and not speaking.</p></div><button class="btn pri" data-act="placeStart">Take the placement test</button></div>`);
   return `<section class="hero">
     <div class="tile ${tileClass(zhOf(next, l))}" lang="zh">${esc(zhOf(next, l))}</div>
@@ -952,7 +955,7 @@ const A = {
   start: () => startSession(),
   topic: d => startSession(d.k),
   endSess: d => { ui.sess = null; if (d.go) ui.tab = d.go; if (d.switch) S.lang = d.switch; save(); render(); window.scrollTo(0, 0); },
-  next: () => nextStep(),
+  next: () => { window.scrollTo(0, 0); nextStep(); },
   pick: d => { const s = ui.sess, q = cur(), it = getItem(s.l, q.id), o = q.opts[+d.i]; const ok = o === it.en; answer(ok); s.ans = { pick: o, ok }; speak(it.h, s.l); render(); },
   hintSound: d => { ui.sess.hint = 1; say(d.t); render(); },
   hint: () => { const s = ui.sess; const inp = view.querySelector('input.ans'); const v = inp ? inp.value : ''; s.hint = Math.min(2, s.hint + 1); render(); const n = view.querySelector('input.ans'); if (n) n.value = v; },

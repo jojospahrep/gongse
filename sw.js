@@ -1,4 +1,4 @@
-// Keeps the whole app available offline. The build replaces 5f5e4158524c, so each release refreshes the cache.
+// Keeps the whole app available offline. The build replaces 5201f562fce7, so each release refreshes the cache.
 const CACHE = 'gongse-__VERSION__';
 const FONTS = 'gongse-fonts';
 const FILES = ['./', 'index.html', 'dict.json', 'manifest.webmanifest', 'vendor/to-jyutping.js', 'vendor/pinyin-pro.js', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
