@@ -220,8 +220,8 @@ async function initCaps(onChange) {
 
 // Accounts (Home Screen app only): email sign-in through Supabase, one progress row per person.
 // The anon key is public by design; row-level security on the table keeps each person to their own row.
-const SUPA_URL = '';
-const SUPA_KEY = '';
+const SUPA_URL = 'https://rduddtwkjpojnumpqiad.supabase.co';
+const SUPA_KEY = 'sb_publishable_8odjlcGcjPbA4bN3ZW5-sQ_4src8VEu';
 const AUTH_LS = 'gongse.auth';
 const accountsOn = () => STANDALONE && !!SUPA_URL && !!SUPA_KEY;
 let auth = null, cloudState = 'idle', cloudAt = 0;
